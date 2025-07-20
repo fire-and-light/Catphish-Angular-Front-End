@@ -161,6 +161,9 @@ export class MatchProfileComponent implements OnInit {
     }
 
     this.stomp.send("/" + this.matchname, {}, JSON.stringify(webSocketMessage));
-    this.router.navigate(["/matches", this.username]);
+
+    setTimeout(() => {
+      this.router.navigate(["/matches", this.username]);
+    }, 50);
   }
 }
