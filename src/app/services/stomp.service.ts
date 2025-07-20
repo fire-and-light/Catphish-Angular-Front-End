@@ -10,7 +10,9 @@ export class StompService {
   client = Stomp.over(this.socket);
 
   constructor() {
-
+    if (!this.client.connected) {
+      this.client.connect();
+    }
   }
 
   connect() : void {
@@ -18,9 +20,7 @@ export class StompService {
   }
 
   subscribe(topic : string, callback? : any, headers? : any) : void {
-    const connected : boolean = this.client.connected;
-
-    if (connected) {
+    if (this.client.connected) {
       this.subscribeToTopic(topic, callback, headers);
 
     } else {

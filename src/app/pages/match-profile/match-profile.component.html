@@ -3,11 +3,11 @@
         <label id="logo">catphish</label>
         
         <ul>
-            <li><a id="profile" (click)="this.enterProfile()">Profile</a></li>
-            <li><a id="match" (click)="this.enterMatch()">Match</a></li>
-            <li><a id="matches" class="active" (click)="this.enterMatches()">Matches</a></li>
-            <li><a id="signout" (click)="this.enterMain()">Sign Out</a></li>
-            <li><a id="delete" (click)="this.enterDelete()">Delete</a></li>
+            <li><a id="profile" [routerLink]="['/profile', this.username]">Profile</a></li>
+            <li><a id="match" [routerLink]="['/match', this.username]">Match</a></li>
+            <li><a id="matches" [routerLink]="['/matches', this.username]">Matches</a></li>
+            <li><a id="signout" [routerLink]="['/']">Sign Out</a></li>
+            <li><a id="delete" [routerLink]="['/delete', this.username]">Delete</a></li>
         </ul>
     </nav>
 

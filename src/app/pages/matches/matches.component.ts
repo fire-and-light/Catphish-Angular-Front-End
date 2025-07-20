@@ -58,7 +58,6 @@ export class MatchesComponent implements OnInit {
         p.style.color = "white";
         
         img.addEventListener("click", () : void => {
-          this.stomp.unsubscribe("/" + this.username);
           this.router.navigate(["/match-profile", this.username, body.match.username]);
         });
         
@@ -85,6 +84,10 @@ export class MatchesComponent implements OnInit {
     }, {id: "/" + this.username});
 
     this.loadCandidates();
+  }
+
+  ngOnDestroy() : void {
+    this.stomp.unsubscribe("/" + this.username);
   }
 
   loadCandidates() : void {
@@ -126,7 +129,6 @@ export class MatchesComponent implements OnInit {
           p.style.color = "white";
           
           img.addEventListener("click", () : void => {
-            this.stomp.unsubscribe("/" + this.username);
             this.router.navigate(["/match-profile", this.username, response[i].username]);
           });
         }
@@ -134,27 +136,7 @@ export class MatchesComponent implements OnInit {
     });
   }
 
-  enterProfile() : void {
-    this.stomp.unsubscribe("/" + this.username);
-    this.router.navigate(["/profile", this.username]);
-  }
-
-  enterMatch() : void {
-    this.stomp.unsubscribe("/" + this.username);
-    this.router.navigate(["/match", this.username]);
-  }
-
   reload() : void {
     window.location.reload();
-  }
-
-  enterMain() : void {
-    this.stomp.unsubscribe("/" + this.username);
-    this.router.navigate(["/"]);
-  }
-
-  enterDelete() : void {
-    this.stomp.unsubscribe("/" + this.username);
-    this.router.navigate(["/delete", this.username]);
   }
 }

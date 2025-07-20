@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { StompService } from 'src/app/services/stomp.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class MatchComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  ngOnInit() : void {
     this.username = this.route.snapshot.paramMap.get("username");
     this.nav = document.getElementById("nav");
     this.section = document.getElementById("section");

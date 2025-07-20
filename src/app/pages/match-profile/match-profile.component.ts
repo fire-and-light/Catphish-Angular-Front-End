@@ -37,20 +37,22 @@ export class MatchProfileComponent implements OnInit {
       let choice = body.choice;
 
       if (choice === "Unmatch") {
-        this.stomp.unsubscribe("/" + this.username);
         this.router.navigate(["/matches", this.username]);
 
       } else if (choice === "Message") {
         this.updateChat(body.message.message);
         
       } else if (choice === "Delete") {
-        this.stomp.unsubscribe("/" + this.username);
         this.router.navigate(["/matches", this.username]);
       }
     }, {id: "/" + this.username});
 
     this.loadMatch();
     this.loadChat();
+  }
+
+  ngOnDestroy() : void {
+    this.stomp.unsubscribe("/" + this.username);
   }
   
   loadMatch() : void {
@@ -159,32 +161,6 @@ export class MatchProfileComponent implements OnInit {
     }
 
     this.stomp.send("/" + this.matchname, {}, JSON.stringify(webSocketMessage));
-    this.stomp.unsubscribe("/" + this.username);
     this.router.navigate(["/matches", this.username]);
-  }
-
-  enterProfile() : void {
-    this.stomp.unsubscribe("/" + this.username);
-    this.router.navigate(["/profile", this.username]);
-  }
-
-  enterMatch() : void {
-    this.stomp.unsubscribe("/" + this.username);
-    this.router.navigate(["/match", this.username]);
-  }
-
-  enterMatches() : void {
-    this.stomp.unsubscribe("/" + this.username);
-    this.router.navigate(["/matches", this.username]);
-  }
-
-  enterMain() : void {
-    this.stomp.unsubscribe("/" + this.username);
-    this.router.navigate(["/"]);
-  }
-
-  enterDelete() : void {
-    this.stomp.unsubscribe("/" + this.username);
-    this.router.navigate(["/delete", this.username]);
   }
 }
