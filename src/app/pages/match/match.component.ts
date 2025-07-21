@@ -182,6 +182,7 @@ export class MatchComponent implements OnInit {
 
   enterMain() : void {
     if (this.canClick) {
+      this.stomp.disconnect();
       this.router.navigate(["/"]);
     }
   }

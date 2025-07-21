@@ -6,7 +6,7 @@
             <li><a id="profile" [routerLink]="['/profile', this.username]">Profile</a></li>
             <li><a id="match" [routerLink]="['/match', this.username]">Match</a></li>
             <li><a id="matches" [routerLink]="['/matches', this.username]">Matches</a></li>
-            <li><a id="signout" [routerLink]="['/']">Sign Out</a></li>
+            <li><a id="signout" (click)="this.enterMain()">Sign Out</a></li>
             <li><a id="delete" [routerLink]="['/delete', this.username]">Delete</a></li>
         </ul>
     </nav>

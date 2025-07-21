@@ -6,45 +6,60 @@ import * as Stomp from "stompjs";
   providedIn: 'root'
 })
 export class StompService {
-  socket = new SockJS("https://catphish-back-end.azurewebsites.net/ws");
-  client = Stomp.over(this.socket);
+  socket : any;
+  client : any;
 
   constructor() {
-    if (!this.client.connected) {
-      this.client.connect();
-    }
-  }
-
-  connect() : void {
-    this.client.connect();
+    
   }
 
   subscribe(topic : string, callback? : any, headers? : any) : void {
+    if (this.client == null) {
+      this.socket = new SockJS("https://catphish-back-end.azurewebsites.net/ws");
+      this.client = Stomp.over(this.socket);
+    }
+
     if (this.client.connected) {
-      this.subscribeToTopic(topic, callback, headers);
+      this.client.subscribe(topic, (frame : any): any => {
+        callback(frame);
+      }, headers);
 
     } else {
       this.client.connect({}, () : void => {
-        this.subscribeToTopic(topic, callback, headers);
+        this.client.subscribe(topic, (frame : any): any => {
+          callback(frame);
+        }, headers);
       });
     }
   }
 
-  private subscribeToTopic(topic : string, callback? : any, headers? : any) : void {
-    this.client.subscribe(topic, (frame : any): any => {
-      callback(frame);
-    }, headers);
-  }
-
   send(topic : string, headers? : any, json? : string) {
-    this.client.send(topic, headers, json);
+    if (this.client == null) {
+      this.socket = new SockJS("https://catphish-back-end.azurewebsites.net/ws");
+      this.client = Stomp.over(this.socket);
+    }
+
+    if (this.client.connected) {
+      this.client.send(topic, headers, json);
+
+    } else {
+      this.client.connect({}, () : void => {
+        this.client.send(topic, headers, json);
+      });
+    }
   }
 
   unsubscribe(id : string) : void {
-    this.client.unsubscribe(id);
+    if (this.client != null) {
+      this.client.unsubscribe(id);
+    }
   }
 
   disconnect() : void {
-    this.client.disconnect();
+    if (this.client != null && this.client.connected) {
+      this.client.disconnect();
+      this.socket = null;
+      this.client = null;
+    }
   }
 }

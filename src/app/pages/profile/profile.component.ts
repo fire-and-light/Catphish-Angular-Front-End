@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StompService } from 'src/app/services/stomp.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,7 @@ export class ProfileComponent implements OnInit {
   saved : any;
   reader : any;
 
-  constructor(private route : ActivatedRoute, private http : HttpClient) {
+  constructor(private http : HttpClient, private route : ActivatedRoute, private router : Router, private stomp : StompService) {
 
   }
 
@@ -81,5 +82,10 @@ export class ProfileComponent implements OnInit {
 
   reload() : void {
     window.location.reload();
+  }
+
+  enterMain() : void {
+    this.stomp.disconnect();
+    this.router.navigate(["/"]);
   }
 }

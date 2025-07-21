@@ -47,6 +47,7 @@ export class DeleteComponent implements OnInit {
       }
     });
 
+    this.stomp.disconnect()
     this.router.navigate(["/"]);
   }
 
@@ -95,6 +96,7 @@ export class DeleteComponent implements OnInit {
 
   enterMain() : void {
     if (this.canClick) {
+      this.stomp.disconnect();
       this.router.navigate(["/"]);
     }
   }

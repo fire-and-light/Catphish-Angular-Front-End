@@ -14,7 +14,7 @@ export class MatchesComponent implements OnInit {
   section : any;
   empty : any;
 
-  constructor(private route : ActivatedRoute, private http : HttpClient, private router : Router, private stomp : StompService) {
+  constructor(private http : HttpClient, private route : ActivatedRoute, private router : Router, private stomp : StompService) {
 
   }
 
@@ -138,5 +138,10 @@ export class MatchesComponent implements OnInit {
 
   reload() : void {
     window.location.reload();
+  }
+
+  enterMain() : void {
+    this.stomp.disconnect();
+    this.router.navigate(["/"]);
   }
 }

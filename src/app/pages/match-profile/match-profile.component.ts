@@ -18,7 +18,7 @@ export class MatchProfileComponent implements OnInit {
   chat : any;
   message : any;
   
-  constructor(private http : HttpClient, private route : ActivatedRoute, private stomp : StompService, private router : Router) {
+  constructor(private http : HttpClient, private route : ActivatedRoute, private router : Router, private stomp : StompService) {
 
   }
 
@@ -164,6 +164,11 @@ export class MatchProfileComponent implements OnInit {
 
     setTimeout(() => {
       this.router.navigate(["/matches", this.username]);
-    }, 50);
+    }, 70);
+  }
+
+  enterMain() : void {
+    this.stomp.disconnect();
+    this.router.navigate(["/"]);
   }
 }
